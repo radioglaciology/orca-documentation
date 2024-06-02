@@ -64,7 +64,7 @@ write_files:
     git clone git@github.com:radioglaciology/uhd_radar.git
     cd uhd_radar
     #git checkout thomas/dask # Uncomment if you want to check out a specific branch other than main
-    conda env create -n uhd -f environment.yaml
+    conda env create -n uhd -f environment-rpi.yaml
     conda activate uhd
     python /home/ubuntu/miniconda/envs/uhd/lib/uhd/utils/uhd_images_downloader.py
     systemctl --user enable radar.service
