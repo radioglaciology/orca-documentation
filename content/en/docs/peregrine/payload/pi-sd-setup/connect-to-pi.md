@@ -1,7 +1,7 @@
 ---
 title: Connecting to the Raspberry Pi
 #description: 
-#weight: 10
+weight: 10
 ---
 
 By default, the cloud-init script sets up a static IP of `192.168.11.137`, but

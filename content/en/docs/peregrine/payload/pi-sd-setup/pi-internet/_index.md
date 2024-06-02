@@ -95,8 +95,8 @@ If you have docker installed on your system, it
 
 ```
 sudo iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE
-sudo iptables -I DOCKER-USER -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-sudo iptables -I DOCKER-USER -i net0 -o wlan0 -j ACCEPT
+sudo iptables -I DOCKER-USER 1 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+sudo iptables -I DOCKER-USER 2 -i net0 -o wlan0 -j ACCEPT
 ```
 {{% /alert %}}
 

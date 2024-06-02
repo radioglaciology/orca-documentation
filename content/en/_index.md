@@ -1,5 +1,5 @@
 ---
-title: Goldydocs
+title: Open Radar Code Architecture
 ---
 
 {{< blocks/cover title="Open-source ice-penetrating radar for the cryosphere" image_anchor="top" height="full" >}}
@@ -9,14 +9,14 @@ title: Goldydocs
 <a class="btn btn-lg btn-secondary me-3 mb-4" href="https://github.com/thomasteisberg/uhd_radar/">
   Download <i class="fab fa-github ms-2 "></i>
 </a>
-<p class="lead mt-5">**Insert clever name here** is an open and extensible platform for building radar instruments to better understand Earth's coldest places</p>
+<p class="lead mt-5">Open Radar Code Architecture (ORCA) is an open platform for building radar instruments to better understand Earth's coolest places</p>
 {{< blocks/link-down color="info" >}}
 {{< /blocks/cover >}}
 
 
 {{% blocks/lead color="primary" %}}
-**Insert clever name here** is a platform for building low-cost, flexible,
-and field-proven radar instruments for the cryosphere. **Clever radar name** is
+ORCA is a platform for building low-cost, flexible,
+and field-proven radar instruments for the cryosphere. ORCA is
 the base project for Peregrine, a field-portable ice-penetrating radar UAV, and
 MAPPERR, a multi-frequency radar/radiometer.
 

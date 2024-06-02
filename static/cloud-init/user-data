@@ -43,6 +43,7 @@ packages:
 - exfat-fuse
 - i2c-tools
 - rpi.gpio-common
+- util-linux-extra
 
 ## Write arbitrary files to the file-system
 write_files:

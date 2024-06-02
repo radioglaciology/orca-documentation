@@ -1,5 +1,5 @@
 baseURL = "/"
-title = "Open-source ice-penetrating radar platform"
+title = "Open Radar Code Architecture"
 
 # Language settings
 contentDir = "content/en"
@@ -64,8 +64,8 @@ languageName ="English"
 # Weight used for sorting.
 weight = 1
 [languages.en.params]
-title = "Goldydocs"
-description = "A Docsy example site"
+title = "Open Radar Code Architecture"
+description = "Documentation for ORCA"
 
 [markup]
   [markup.goldmark]
@@ -86,8 +86,8 @@ description = "A Docsy example site"
 section = ["HTML", "print", "RSS"]
 
 [params]
-copyright = "The Docsy Authors"
-privacy_policy = "https://policies.google.com/privacy"
+copyright = "Anna Broome and Thomas Teisberg"
+#privacy_policy = "https://policies.google.com/privacy"
 
 # First one is picked as the Twitter card image if not set on page.
 # images = ["images/project-illustration.png"]
@@ -108,12 +108,12 @@ version = "0.0"
 
 # A link to latest version of the docs. Used in the "version-banner" partial to
 # point people to the main doc site.
-url_latest_version = "https://example.com"
+url_latest_version = "https://radioglaciology.github.io/orca-documentation/"
 
 # Repository configuration (URLs for in-page links to opening issues and suggesting changes)
-github_repo = "https://github.com/google/docsy-example"
+github_repo = "https://github.com/radioglaciology/orca-documentation"
 # An optional link to a related project repo. For example, the sibling repository where your product code lives.
-github_project_repo = "https://github.com/google/docsy"
+github_project_repo = "https://github.com/radioglaciology/uhd_radar"
 
 # Specify a value here if your content directory is not in your repo's root directory
 # github_subdir = ""
@@ -123,7 +123,7 @@ github_project_repo = "https://github.com/google/docsy"
 github_branch= "main"
 
 # Google Custom Search Engine ID. Remove or comment out to disable search.
-gcs_engine_id = "d72aa9b2712488cc3"
+#gcs_engine_id = "d72aa9b2712488cc3"
 
 # Enable Algolia DocSearch
 algolia_docsearch = false
@@ -167,37 +167,37 @@ enable = false
 
 [params.links]
 # End user relevant links. These will show up on left side of footer and in the community page if you have one.
-[[params.links.user]]
-  name = "User mailing list"
-  url = "https://example.org/mail"
-  icon = "fa fa-envelope"
-  desc = "Discussion and help from your fellow users"
-[[params.links.user]]
-  name ="Twitter"
-  url = "https://example.org/twitter"
-  icon = "fab fa-twitter"
-  desc = "Follow us on Twitter to get the latest news!"
-[[params.links.user]]
-  name = "Stack Overflow"
-  url = "https://example.org/stack"
-  icon = "fab fa-stack-overflow"
-  desc = "Practical questions and curated answers"
+# [[params.links.user]]
+#   name = "User mailing list"
+#   url = "https://example.org/mail"
+#   icon = "fa fa-envelope"
+#   desc = "Discussion and help from your fellow users"
+# [[params.links.user]]
+#   name ="Twitter"
+#   url = "https://example.org/twitter"
+#   icon = "fab fa-twitter"
+#   desc = "Follow us on Twitter to get the latest news!"
+# [[params.links.user]]
+#   name = "Stack Overflow"
+#   url = "https://example.org/stack"
+#   icon = "fab fa-stack-overflow"
+#   desc = "Practical questions and curated answers"
 # Developer relevant links. These will show up on right side of footer and in the community page if you have one.
 [[params.links.developer]]
   name = "GitHub"
-  url = "https://github.com/google/docsy"
+  url = "https://github.com/radioglaciology/uhd_radar"
   icon = "fab fa-github"
-  desc = "Development takes place here!"
-[[params.links.developer]]
-  name = "Slack"
-  url = "https://example.org/slack"
-  icon = "fab fa-slack"
-  desc = "Chat with other project developers"
-[[params.links.developer]]
-  name = "Developer mailing list"
-  url = "https://example.org/mail"
-  icon = "fa fa-envelope"
-  desc = "Discuss development issues around the project"
+  desc = "ORCA codebase GitHub"
+# [[params.links.developer]]
+#   name = "Slack"
+#   url = "https://example.org/slack"
+#   icon = "fab fa-slack"
+#   desc = "Chat with other project developers"
+# [[params.links.developer]]
+#   name = "Developer mailing list"
+#   url = "https://example.org/mail"
+#   icon = "fa fa-envelope"
+#   desc = "Discuss development issues around the project"
 
 # hugo module configuration
 
