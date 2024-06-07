@@ -1,5 +1,5 @@
 ---
-title: SDR interface software
-description: Documentation for the code directly interacting with the SDR
-weight: 10
+title: Processing
+description: Data formats and documentation for ORCA pre- and post-processing code
+weight: 50
 ---

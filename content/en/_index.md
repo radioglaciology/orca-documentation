@@ -17,22 +17,22 @@ title: Open Radar Code Architecture
 {{% blocks/lead color="primary" %}}
 ORCA is a platform for building low-cost, flexible,
 and field-proven radar instruments for the cryosphere. ORCA is
-the base project for Peregrine, a field-portable ice-penetrating radar UAV, and
-MAPPERR, a multi-frequency radar/radiometer.
+the base project for Peregrine, a field-portable ice-penetrating radar UAV,
+MAPPERR, a multi-frequency radar/radiometer, and EYAS, a bistatic ice-penetrating radar receiver.
 
-This website provides documentation for building each of these open-source
+This website provides documentation for the ORCA codebase, along with instructions for building each of these open-source
 instruments.
 
-In addition, we provide general strategies for building your own radar instruments
+We also provide general strategies for extending our code to develope radar instruments
 customized to your research needs.
 {{% /blocks/lead %}}
 
 
 {{% blocks/section color="dark" type="row" %}}
 {{% blocks/feature icon="fa-gears" title="Software-defined radar code documentation" url="docs/radar" %}}
-Our software-defined radar code works with most USRP software-defined radios.
-With a few hardware components and one YAML file, you can build a customized
-ice-penetrating radar system for your research needs.
+Our software-defined radar code works with most Ettus USRP software-defined radios.
+With a few hardware components and one YAML file, you can build an
+ice-penetrating radar system, customized for your research needs.
 {{% /blocks/feature %}}
 
 
@@ -42,12 +42,12 @@ Use our guide to build Peregrine, a field-portable fixed-wing UAV equipped with 
 
 
 {{% blocks/feature icon="fa-map" title="MAPPERR" url="docs/mapperr" %}}
-Use our guide to build MAPPERR, a multi-frequency snowmobile-towed ice-penetrating radar system.
+Use our guide to build MAPPERR, a multi-frequency snowmobile-towed ice-penetrating radar-radiometer system.
 {{% /blocks/feature %}}
 
 
 {{% /blocks/section %}}
 
 {{% blocks/lead %}}
-Some other information down here.
+ORCA was developed by the Stanford Radio Glaciology Lab. Check out our other cool work [here](https://www.radioglaciology.com)! 
 {{% /blocks/lead %}}
