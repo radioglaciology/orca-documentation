@@ -1,7 +1,8 @@
 ---
 title: Host computer transport parameter tuning
+linkTitle: Transport parameters
 description: Overview of host interface tuning to achieve maximum duty cycle
-#weight: 10
+weight: 100
 ---
 
 The maximum duty cycle you can achieve is a function of the SDR you use, the
@@ -9,10 +10,10 @@ host computer, and the bandwidth you need. This page outlines suggestions for
 how to figure out an achievable duty cycle and what parameters can be tweaked
 to maximize this.
 
-# General process for benchmarking duty cycle
+## General process for benchmarking duty cycle
 
 
-## Determine the maximum achievable bandwidth with benchmark_rate
+### Determine the maximum achievable bandwidth with benchmark_rate
 
 Use the USRP example benchmark_rate program (located at
 `<path to conda install>/envs/<uhd environment name>/lib/uhd/examples`) to
@@ -35,13 +36,13 @@ probably.
 Read about
 [USB transport parameters on the Ettus website](https://files.ettus.com/manual/page_transport.html).
 
-## Figure out desired pulse lengths (RX and TX) and set frame sizes appropriately
+### Figure out desired pulse lengths (RX and TX) and set frame sizes appropriately
 
 Basically you want one full set of received samples to fit in a frame.
 See many more details about this in “Transport layer - throughput limitations”
 below.
 
-## Run `tests/error_code_late_command_sweep.py` to figure out your max duty cycle
+### Run `tests/error_code_late_command_sweep.py` to figure out your max duty cycle
 
 This will sweep across effective duty cycles from 100% to 1, testing the
 equivalent pulse_rep_int for each one. The script produces a plot (saved as
@@ -52,7 +53,7 @@ Example results from running `error_code_late_command_sweep.py` on several
 combinations of host computers and SDRs.
 {{% /imgproc %}}
 
-# Tuning transport parameters
+## Tuning transport parameters
 
 In addition to getting late commands, the other issues we can run into are
 overflows (D on network-based devices, O on other devices) and underflows (U on

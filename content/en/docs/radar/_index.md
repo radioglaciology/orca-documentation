@@ -1,7 +1,9 @@
 ---
-title: Software-defined radar
+title: ORCA Software-Defined Radar
+linkTitle: ORCA Software-Defined Radar Guide
 #description: Details about the Peregrine UAS
 weight: 1
+menu: {main: {weight: 1, pre: "<i class='fa-solid fa-gears'></i>"}}
 ---
 
 {{% pageinfo %}}

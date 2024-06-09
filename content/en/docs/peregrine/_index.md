@@ -1,6 +1,8 @@
 ---
-title: Peregrine UAS
+title: Peregrine UAV-Borne Radar
+linkTitle: Peregrine
 description: Details about the Peregrine UAS
+menu: {main: {weight: 40, pre: "<i class='fa-solid fa-plane-departure'></i>"}}
 weight: 10
 ---
 

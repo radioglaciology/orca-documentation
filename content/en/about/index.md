@@ -1,7 +1,7 @@
 ---
 title: About Goldydocs
 linkTitle: About
-#menu: {main: {weight: 10}}
+menu: {main: {weight: 100, pre: "<i class='fa-solid fa-people-group'></i>"}}
 ---
 
 {{% blocks/cover title="About Goldydocs" image_anchor="bottom" height="auto" %}}
