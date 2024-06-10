@@ -1,278 +1,102 @@
----
-title: Configuration options
-description: All of the options in `config.yaml`
-weight: 30
----
+# This is an example of a YAML configuration file used to set parameters for the
+# ORCA system.
+# This configuration file is meant for the Ettus USRP B205mini-i.
 
-Most of the behavior of the radar system is set by your YAML configuration file.
-
-You can find some examples of basic configuration files for different SDRs in
-the [`config`](https://github.com/radioglaciology/uhd_radar/tree/main/config)
-directory of the repository. This page provides a brief overview of the
-available settings. Each section on this page corresponds to a section of the
-YAML file.
-
-For reference, the entire YAML file used as an example on this page is:
-
-{{< expand "Example YAML configuration file" >}}
-{{< readfile file="/static/config/example_config.yaml" code="true" lang="yaml" >}}
-{{< /expand >}}
-
-### YAML syntax note
-
-Note that we use variables within our YAML files. These are assigned using the
-format `&variable` before a value and used late in the config file as
-`*variable`. See examples below.
-
-## Generate
-
-```
+### CHIRP AND PULSE PARAMETERS
+GENERATE:
     sample_rate: &s_rate 56e6            # [Hz] Sample rate of the generated
                                          #   chirp (used as TX and RX rate too)
-```
-
-Sample rate used to generate the chirp that will be transmitted. This should
-be the same as the SDR's sample rate.
-
-```
     chirp_type: 'linear'                 # Chirp frequency progression type.
                                          #   Supported options: "linear",
                                          #   "hyperbolic"
-```
-
-This is the type of chirp you want to generate, in the form of how the frequency
-should progress. Linear chirps are by far the most common, but hyperbolic
-chirps have some useful properties.
-
-```
     chirp_bandwidth: 25e6                # [Hz] Bandwidth of the chirp
-```
-
-This is the total bandwidth (end frequency minus start frequency) of the chirp
-you want to transmit. This may be less than the `sample_rate` but should not
-be greater than `sample_rate`.
-
-```
     lo_offset_sw: 0e6                    # [Hz] Center frequency of the chirp
                                          #   (relative to RF center frequency)
-```
-
-This is the center frequency of the generate chirp (relative to the frequency
-set in `RF0` -> `freq`).
-
-```
     window: 'rectangular'                # Window function applied to the chirp
                                          #   Supported options: "rectangular",
                                          #   "hamming", "blackman", "kaiser10",
                                          #   "kaiser14", "kaiser18"
-```
-
-The window function to apply to the chirp. If you do not want to use a window,
-choose `rectangular`.
-
-```
     chirp_length: &chirp_len 20e-6       # [s] Chirp length without zero padding
-```
-
-The length of the non-zeros part of the file to transmit
-
-```
     pulse_length: &pulse_len 20e-6       # [s] Total pulse length (chirp +
                                          #   symmetric zero padding)    
-```
-
-The total length of the samples to transmit. If this is longer than `chirp_length`,
-symmetric zero padding will be added to each side. You might want to do this
-if, for example, something in your RF frontend has a turn-on transient you want
-to avoid impacting your transmitted signal.
-
-```
     out_file: &ch_sent "data/chirp.bin"  # The name of the output binary file
                                          #   containing the pulse samples
-```
-
-File location for writing the generated chirp samples
-
-```
     show_plot: False                     # Display a time-domain plot of the
                                          #   generated chirp
-```
 
-If set to true, generates a time-domain plot of the generated samples for
-a quick check.
-
-## Device
-
-USRP device arguments are used to identify specific SDRs (if multiple are
-connected to the same computer), to configure model-specific parameters, 
-and to set transport parameters of the link (USB, ethernet) between the
-SDR and the host computer. For advice on tuning transport parameters, see:
-
-https://radioglaciology.github.io/orca-documentation/docs/radar/host-connection/
-
-For more details, see the relevant Ettus help pages:
-
-* Device identification: https://files.ettus.com/manual/page_identification.html
-* Advanced config: https://files.ettus.com/manual/page_configuration.html
-* Transport parameters: https://files.ettus.com/manual/page_transport.html
-
-```
+### DEVICE CONNECTION AND DATA TRANSFER
+DEVICE:
+    # USRP device arguments are used to identify specific SDRs (if multiple are
+    # connected to the same computer), to configure model-specific parameters, 
+    # and to set transport parameters of the link (USB, ethernet) between the
+    # SDR and the host computer. For advice on tuning transport parameters, see:
+    # https://radioglaciology.github.io/orca-documentation/docs/radar/host-connection/
+    # For more details, see the relevant Ettus help pages:
+    # Device identification: https://files.ettus.com/manual/page_identification.html
+    # Advanced config: https://files.ettus.com/manual/page_configuration.html
+    # Transport parameters: https://files.ettus.com/manual/page_transport.html
     device_args: "num_recv_frames=700,num_send_frames=700,recv_frame_size=11000,send_frame_size=11000"
-```
-
-For configuring device arguments, see [Transport Parameters](/docs/radar/sdr-interface/host-interface/).
-
-```
     subdev: "A:A"                        # Active SDR submodules
                                          #   See https://files.ettus.com/manual/page_configuration.html
-```
-
-This is used for identifying specific front-ends within the SDR. See
-the [Ettus manual](https://files.ettus.com/manual/page_configuration.html).
-
-```
     clk_ref: "internal"                  # Clock reference source
                                          #   See https://files.ettus.com/manual/page_sync.html
-```
-
-See the [Ettus manual](https://files.ettus.com/manual/page_sync.html).
-
-```
     clk_rate: 56e6                       # [Hz] SDR main clock frequency
-```
-
-The SDR clock frequency. Generally, this should be the same as, or an integer
-multiple of, `sample_rate`.
-
-```
     tx_channels: "0"                     # List of TX channels to use (command
                                          #   separated)
-```
-
-Comma separated list of transmit channels (if you device has multiple)
-
-```
     rx_channels: "0"                     # List of RX channels to use (command
                                          #   separated)
                                          #   (must be the same length as tx_channels)
-```
-Comma separated list of receive channels (if you device has multiple)
-
-```
     cpu_format: "fc32"                   # CPU-side sample format
                                          #   See https://files.ettus.com/manual/structuhd_1_1stream__args__t.html#a602a64b4937a85dba84e7f724387e252
                                          #   Supported options: "fc32", "sc16",
                                          #   "sc8"
-```
-
-Format for samples on the host computer side. In most cases, we recommend `fc32`
-for maximum flexibility. Read more in the
-[Ettus manual](https://files.ettus.com/manual/structuhd_1_1stream__args__t.html#a602a64b4937a85dba84e7f724387e252).
-
-```
     otw_format: "sc12"                   # On the wire format
                                          #   See https://files.ettus.com/manual/structuhd_1_1stream__args__t.html#a0ba0e946d2f83f7ac085f4f4e2ce9578
                                          #   (Any format supported.)
-```
-
-The format used to represent samples in the interface between the SDR and the
-host computer. This format choice is transparent to the host computer code
-because UHD automatically translates received samples into the `cpu_format`.
-
-It can, however, have an impact on performance. And choosing a format with less
-precision than the ADC of your SDR will degrade the dynamic range (but may
-allow for higher bandwidth or duty cycle).
-
-Read more in the [Ettus manual](https://files.ettus.com/manual/structuhd_1_1stream__args__t.html#a0ba0e946d2f83f7ac085f4f4e2ce9578).
-
-## GPIO
-
-GPIO functionality is being re-worked.
-
-## RF(0/1)
-
-```
+### GPIO PIN CONFIGURATION
+GPIO:
+    gpio_bank: "FP0"                     # Which GPIO bank to use (FP0 is front
+                                         #   panel and default)
+    pwr_amp_pin: "-1"                    # Which GPIO pin to use for external
+                                         #   power amplifier control
+                                         #   (set to -1 if not using)
+    ref_out: -1                          # Turns the 10 MHz reference out signal
+                                         #   on (1) or off (0)
+                                         #   set to (-1) if SDR does not support
+### RF FRONTEND 0 CONFIGURATION
+RF0:
     rx_rate: *s_rate                     # [Hz] RX Sample Rate
-```
-
-Receive sample rate. Generally should be the same as `sample_rate`.
-
-```
     tx_rate: *s_rate                     # [Hz] TX Sample Rate
-```
-
-Transmit sample rate. Generally should be the same as `sample_rate`.
-
-```
     freq: 450e6                          # [Hz] Center Frequency (mixer frequency)
-```
-
-Center frequency. This is what 0 Hz frequency in the generated chirp will be
-transmitted at.
-
-```
     lo_offset: 15e6                      # [Hz] LO offset
-```
-
-The LO offset is used to shift the mixer to a different frequency than the
-center frequency of your transmitted chirp. If the LO offset is set to zero,
-then the mixer will be tuned to `freq`.
-
-```
     rx_gain: 36                          # [dB] RX Gain
-```
-
-Receive gain in dB. How this is implemented varies significantly between SDRs.
-Refer to the Ettus manual for details for your SDR.
-
-```
     tx_gain: 65                          # [dB] TX Gain - 60.8 is about -10 dBm
                                          #   output on the b205mini
-```
-
-Transmit gain in dB. How this is implemented varies significantly between SDRs.
-Refer to the Ettus manual for details for your SDR.
-
-```
     bw: 56e6                             # [Hz] Configurable filter bandwidth
-```
-
-Receive filter bandwidth. This is implemented as a tunable digital filter on
-some Ettus SDRs. Note that the center of this filter is always `freq` even if
-`lo_offset` is not zero.
-
-```
     tx_ant: "TX/RX"                      # Port to be used for TX
-```
-
-Transmit RF port to use (if your SDR has multiple available).
-
-```
     rx_ant: "RX2"                        # port to be used for RX
-```
-
-Receive RF port to use (if your SDR has multiple available).
-
-```
     transmit: true                       # "true" (or not set) for normal operation,
                                          #   set to "false" to completely disable transmit
-```
-
-Set to false to disable transmitting. This can be useful for debugging and/or
-for passive radar systems.
-
-```
     tuning_args: ""                      # Set int_n or fractional tuning args,
                                          #   leave as "" to do nothing (only
                                          #   supported on some SDRs)
-```
-
-Some Ettus SDRs support multiple mixer tuning modes. The phase noise behavior
-of integer N and fractional N tuning differs.
-
-# IGNORE BELOW
-
-```
+### RF FRONTEND 1 CONFIGURATION (not supported on b205mini)
+RF1:
+    rx_rate: *s_rate                     # [Hz] RX Sample Rate
+    tx_rate: *s_rate                     # [Hz] TX Sample Rate
+    freq: 450e6                          # [Hz] Center Frequency (mixer frequency)
+    lo_offset: 0e6                       # [Hz] LO offset
+    rx_gain: 10                          # [dB] RX Gain
+    tx_gain: 10                          # [dB] TX Gain - 60.8 is about -10 dBm
+                                         #   output on the b205mini
+    bw: 56e6                             # [Hz] Configurable filter bandwidth
+    tx_ant: "TX/RX"                      # Port to be used for TX
+    rx_ant: "RX2"                        # port to be used for RX
+    transmit: false                      # "true" (or not set) for normal operation,
+                                         #   set to "false" to completely disable transmit
+    tuning_args: ""                      # Set int_n or fractional tuning args,
+                                         #   leave as "" to do nothing (only
+                                         #   supported on some SDRs)
 ### PULSE TIMING
 CHIRP:
     time_offset: 1                       # [s] Offset time before the first
@@ -316,6 +140,6 @@ RUN_MANAGER: # These settings are only used by run.py -- not read by main.cpp
     save_gps: False                      # Set to true if using gps and wanting
                                          #   to save gps location data, set to
                                          #   false otherwise
-```
+
 
 

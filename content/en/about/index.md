@@ -1,5 +1,5 @@
 ---
-title: About Goldydocs
+title: Contributors, Citations, Contact Info, and Acknowledgements
 linkTitle: About
 menu: {main: {weight: 100, pre: "<i class='fa-solid fa-people-group'></i>"}}
 ---

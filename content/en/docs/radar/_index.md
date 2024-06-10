@@ -7,7 +7,15 @@ menu: {main: {weight: 1, pre: "<i class='fa-solid fa-gears'></i>"}}
 ---
 
 {{% pageinfo %}}
-Landing page for docs about the software-defined radar code
+For a general overview of the ORCA system, we highly recommend reading through
+our publication:
+
+{{% readfile "/docs/tgrs_citation.md" %}}
+
 {{% /pageinfo %}}
 
-Test
+The documentation is broken into two parts. [Radar Code](/docs/radar/sdr-interface/) covers everything about
+the code that runs while the radar is actively collecting data. The
+[Postprocessing](/docs/radar/postprocessing/)
+section explains how data is saved and explains the basic processing scripts that
+we provide.
