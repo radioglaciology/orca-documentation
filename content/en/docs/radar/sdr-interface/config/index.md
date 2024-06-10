@@ -4,318 +4,108 @@ description: All of the options in `config.yaml`
 weight: 30
 ---
 
-Most of the behavior of the radar system is set by your YAML configuration file.
-
-You can find some examples of basic configuration files for different SDRs in
-the [`config`](https://github.com/radioglaciology/uhd_radar/tree/main/config)
-directory of the repository. This page provides a brief overview of the
-available settings. Each section on this page corresponds to a section of the
-YAML file.
-
-For reference, the entire YAML file used as an example on this page is:
-
-{{< expand "Example YAML configuration file" >}}
-{{< readfile file="/static/config/example_config.yaml" code="true" lang="yaml" >}}
-{{< /expand >}}
-
-### YAML syntax note
-
-Note that we use variables within our YAML files. These are assigned using the
-format `&variable` before a value and used late in the config file as
-`*variable`. See examples below.
-
-## Generate
-
-```
-    sample_rate: &s_rate 56e6            # [Hz] Sample rate of the generated
-                                         #   chirp (used as TX and RX rate too)
-```
-
-Sample rate used to generate the chirp that will be transmitted. This should
-be the same as the SDR's sample rate.
-
-```
-    chirp_type: 'linear'                 # Chirp frequency progression type.
-                                         #   Supported options: "linear",
-                                         #   "hyperbolic"
-```
-
-This is the type of chirp you want to generate, in the form of how the frequency
-should progress. Linear chirps are by far the most common, but hyperbolic
-chirps have some useful properties.
-
-```
-    chirp_bandwidth: 25e6                # [Hz] Bandwidth of the chirp
-```
-
-This is the total bandwidth (end frequency minus start frequency) of the chirp
-you want to transmit. This may be less than the `sample_rate` but should not
-be greater than `sample_rate`.
-
-```
-    lo_offset_sw: 0e6                    # [Hz] Center frequency of the chirp
-                                         #   (relative to RF center frequency)
-```
-
-This is the center frequency of the generate chirp (relative to the frequency
-set in `RF0` -> `freq`).
-
-```
-    window: 'rectangular'                # Window function applied to the chirp
-                                         #   Supported options: "rectangular",
-                                         #   "hamming", "blackman", "kaiser10",
-                                         #   "kaiser14", "kaiser18"
-```
-
-The window function to apply to the chirp. If you do not want to use a window,
-choose `rectangular`.
-
-```
-    chirp_length: &chirp_len 20e-6       # [s] Chirp length without zero padding
-```
-
-The length of the non-zeros part of the file to transmit
-
-```
-    pulse_length: &pulse_len 20e-6       # [s] Total pulse length (chirp +
-                                         #   symmetric zero padding)    
-```
-
-The total length of the samples to transmit. If this is longer than `chirp_length`,
-symmetric zero padding will be added to each side. You might want to do this
-if, for example, something in your RF frontend has a turn-on transient you want
-to avoid impacting your transmitted signal.
-
-```
-    out_file: &ch_sent "data/chirp.bin"  # The name of the output binary file
-                                         #   containing the pulse samples
-```
-
-File location for writing the generated chirp samples
-
-```
-    show_plot: False                     # Display a time-domain plot of the
-                                         #   generated chirp
-```
-
-If set to true, generates a time-domain plot of the generated samples for
-a quick check.
-
-## Device
-
-USRP device arguments are used to identify specific SDRs (if multiple are
-connected to the same computer), to configure model-specific parameters, 
-and to set transport parameters of the link (USB, ethernet) between the
-SDR and the host computer. For advice on tuning transport parameters, see:
-
-https://radioglaciology.github.io/orca-documentation/docs/radar/host-connection/
-
-For more details, see the relevant Ettus help pages:
-
-* Device identification: https://files.ettus.com/manual/page_identification.html
-* Advanced config: https://files.ettus.com/manual/page_configuration.html
-* Transport parameters: https://files.ettus.com/manual/page_transport.html
-
-```
-    device_args: "num_recv_frames=700,num_send_frames=700,recv_frame_size=11000,send_frame_size=11000"
-```
-
-For configuring device arguments, see [Transport Parameters](/docs/radar/sdr-interface/host-interface/).
-
-```
-    subdev: "A:A"                        # Active SDR submodules
-                                         #   See https://files.ettus.com/manual/page_configuration.html
-```
-
-This is used for identifying specific front-ends within the SDR. See
-the [Ettus manual](https://files.ettus.com/manual/page_configuration.html).
-
-```
-    clk_ref: "internal"                  # Clock reference source
-                                         #   See https://files.ettus.com/manual/page_sync.html
-```
-
-See the [Ettus manual](https://files.ettus.com/manual/page_sync.html).
-
-```
-    clk_rate: 56e6                       # [Hz] SDR main clock frequency
-```
-
-The SDR clock frequency. Generally, this should be the same as, or an integer
-multiple of, `sample_rate`.
-
-```
-    tx_channels: "0"                     # List of TX channels to use (command
-                                         #   separated)
-```
-
-Comma separated list of transmit channels (if you device has multiple)
-
-```
-    rx_channels: "0"                     # List of RX channels to use (command
-                                         #   separated)
-                                         #   (must be the same length as tx_channels)
-```
-Comma separated list of receive channels (if you device has multiple)
-
-```
-    cpu_format: "fc32"                   # CPU-side sample format
-                                         #   See https://files.ettus.com/manual/structuhd_1_1stream__args__t.html#a602a64b4937a85dba84e7f724387e252
-                                         #   Supported options: "fc32", "sc16",
-                                         #   "sc8"
-```
-
-Format for samples on the host computer side. In most cases, we recommend `fc32`
-for maximum flexibility. Read more in the
-[Ettus manual](https://files.ettus.com/manual/structuhd_1_1stream__args__t.html#a602a64b4937a85dba84e7f724387e252).
-
-```
-    otw_format: "sc12"                   # On the wire format
-                                         #   See https://files.ettus.com/manual/structuhd_1_1stream__args__t.html#a0ba0e946d2f83f7ac085f4f4e2ce9578
-                                         #   (Any format supported.)
-```
-
-The format used to represent samples in the interface between the SDR and the
-host computer. This format choice is transparent to the host computer code
-because UHD automatically translates received samples into the `cpu_format`.
-
-It can, however, have an impact on performance. And choosing a format with less
-precision than the ADC of your SDR will degrade the dynamic range (but may
-allow for higher bandwidth or duty cycle).
-
-Read more in the [Ettus manual](https://files.ettus.com/manual/structuhd_1_1stream__args__t.html#a0ba0e946d2f83f7ac085f4f4e2ce9578).
-
-## GPIO
-
-GPIO functionality is being re-worked.
-
-## RF(0/1)
-
-```
-    rx_rate: *s_rate                     # [Hz] RX Sample Rate
-```
-
-Receive sample rate. Generally should be the same as `sample_rate`.
-
-```
-    tx_rate: *s_rate                     # [Hz] TX Sample Rate
-```
-
-Transmit sample rate. Generally should be the same as `sample_rate`.
-
-```
-    freq: 450e6                          # [Hz] Center Frequency (mixer frequency)
-```
-
-Center frequency. This is what 0 Hz frequency in the generated chirp will be
-transmitted at.
-
-```
-    lo_offset: 15e6                      # [Hz] LO offset
-```
-
-The LO offset is used to shift the mixer to a different frequency than the
-center frequency of your transmitted chirp. If the LO offset is set to zero,
-then the mixer will be tuned to `freq`.
-
-```
-    rx_gain: 36                          # [dB] RX Gain
-```
-
-Receive gain in dB. How this is implemented varies significantly between SDRs.
-Refer to the Ettus manual for details for your SDR.
-
-```
-    tx_gain: 65                          # [dB] TX Gain - 60.8 is about -10 dBm
-                                         #   output on the b205mini
-```
-
-Transmit gain in dB. How this is implemented varies significantly between SDRs.
-Refer to the Ettus manual for details for your SDR.
-
-```
-    bw: 56e6                             # [Hz] Configurable filter bandwidth
-```
-
-Receive filter bandwidth. This is implemented as a tunable digital filter on
-some Ettus SDRs. Note that the center of this filter is always `freq` even if
-`lo_offset` is not zero.
-
-```
-    tx_ant: "TX/RX"                      # Port to be used for TX
-```
-
-Transmit RF port to use (if your SDR has multiple available).
-
-```
-    rx_ant: "RX2"                        # port to be used for RX
-```
-
-Receive RF port to use (if your SDR has multiple available).
-
-```
-    transmit: true                       # "true" (or not set) for normal operation,
-                                         #   set to "false" to completely disable transmit
-```
-
-Set to false to disable transmitting. This can be useful for debugging and/or
-for passive radar systems.
-
-```
-    tuning_args: ""                      # Set int_n or fractional tuning args,
-                                         #   leave as "" to do nothing (only
-                                         #   supported on some SDRs)
-```
-
-Some Ettus SDRs support multiple mixer tuning modes. The phase noise behavior
-of integer N and fractional N tuning differs.
-
-# IGNORE BELOW
-
-```
-### PULSE TIMING
-CHIRP:
-    time_offset: 1                       # [s] Offset time before the first
-                                         #   received sample
-    tx_duration: *pulse_len              # [s] Transmission duration
-    rx_duration: 20e-6                   # [s] Receive duration
-    tr_on_lead: 0e-6                     # [s] Time from GPIO output toggle on
-                                         #   to TX (if using GPIO)
-    tr_off_trail: 0e-6                   # [s] Time from TX off to GPIO output
-                                         #   off (if using GPIO)
-    pulse_rep_int: 200e-6                # [s] Pulse period
-    tx_lead: 0e-6                        # [s] Time between start of TX and RX
-    num_pulses: &num_pulses 10000        # No. of chirps to TX/RX - set to -1 to
-                                         #   continuously transmit pulses until
-                                         #   stopped
-    num_presums: 1                       # Number of received pulses to average
-                                         #   over before writing to file
-    phase_dithering: true                # Enable phase dithering
-### DURING-RECORDING FILE LOCATIONS
-FILES:
-    chirp_loc: *ch_sent                  # Chirp file to transmit
-    save_loc: &save_loc "data/rx_samps.bin"   # (Temporary) location to write
-                                              #   received samples to
-    gps_loc: &gps_save_loc "data/gps_log.txt" # (Temporary) location to save GPS
-                                              #   data (only works if gpsdo is
-                                              #   selected as the clock source)
-    max_chirps_per_file: -1              # Maximum number of RX from a chirp to
-                                         #   write to a single file set to -1 to
-                                         #   avoid breaking into multiple files
-### RUN.PY FILE SAVE LOCATIONS
-RUN_MANAGER: # These settings are only used by run.py -- not read by main.cpp
-    # Note: if max_chirps_per_file = -1 (i.e. all data will be written directly
-    # to a single file, then final_save_loc and save_partial_files will be ignored
-    final_save_loc: null                 # Save location for the big final file,
-                                         #   set to null if you don't want to
-                                         #   save a big file
-    save_partial_files: False            # Set to true if you want individual
-                                         #   small files to be copied, set to
-                                         #   false if you just want the big
-                                         #   merged file to be copied
-    save_gps: False                      # Set to true if using gps and wanting
-                                         #   to save gps location data, set to
-                                         #   false otherwise
-```
-
-
+The entire configuration that controls the radar is defined in a single configuration file. This file is provided at runtime to `run.py` and encapsulates all of the settings needed to run various experiments on different hardware setups. Configuration files are specified in the YAML format and contained in the `config/` folder of the ORCA repository. Default configuration files are included to run the code on a B205mini-i (`default_b205.yaml1`) and on an X310 (`default_x310.yaml`). Here we explain the basics behind the settings available to the user via the config file. 
+
+### Chirp and Pulse Parameters
+* `sample_rate`: Sample rate of the generated chirp (used as TX and RX rate too), specified in Hz
+    - On the X310, the sample rate should be an even integer division of the main clock rate
+* `chirp_type`: Chirp frequency progression type
+    - Supported options: "linear", "hyperbolic"
+* `chirp_bandwidth`: Bandwidth of the chirp, specified in Hz
+    - Should be less than or equal to `sample_rate` to satisfy Nyquist
+* `lo_offset_sw`: Center frequency of the chirp, relative to `RF0:freq` (the RF center frequency), specified in Hz
+* `window`: Window function applied to the chirp
+    - Supported options: "rectangular", "hamming", "blackman", "kaiser10", "kaiser14", "kaiser18"
+    - Applied on transmit and receive by default
+* `chirp_length`: Chirp length without zero padding, specified in seconds
+* `pulse_length`: Total pulse length (chirp + symmetric zero padding), specified in seconds
+    - set equal to `chirp_length` if no zero padding is desired
+* `out_file`: Name of the output binary file containing pulse samples
+* `show_plot`: Whether to display a time-domain plot of the generated chirp (True or False)
+
+### Device Connection and Data Transfer Parameters
+* `device_args`: USRP device arguments are used to identify specific SDRs (if multiple areconnected to the same computer), to configure model-specific parameters, and to set transport parameters of the link (USB, ethernet) between the SDR and the host computer. 
+    - See the default config file or Ettus UHD examples for the SDR you wish to use to set appropriately
+* `subdev`: Active SDR submodules
+    - See the default config file or Ettus UHD examples for the SDR you wish to use to set appropriately
+* `clk_ref`: SDR clock reference source
+    - Supported options: "internal", "external", "gpsdo"
+    - "external" requires an external clock reference connected to the SDR
+    - "gpsdo" requires a GPSDO module to be installed on the SDR
+* `clk_rate`: SDR main clock frequency, specified in Hz
+    - only specific frequencies are allowable for each SDR, see Ettus documentation for more information
+* `tx_channels`: list of TX channels to use (comma separated)
+* `rx_channels`: list of RX channels to use (comma separated)
+* `cpu_format`: CPU-side sample format
+    - Supported options: "fc32", "sc16", "sc8"
+* `otw_format`: On the wire format
+    - any format supported
+
+### GPIO Configuration Parameters
+Many of the Ettus SDRs have GPIO pins which can be used for conveying automatic transmit/receive signals or other general signals to external devices. The parameters in this section are specific to how MAPPERR and PEREGRINE use the SDR GPIO and can be adapted for other use cases. 
+* `gpio_bank`: Which GPIO bank to use
+    - "FP0" is the front panel and default bank on the X310
+* `pwr_amp_pin`: Which GPIO pin to use fo external power amplifier control
+    - set to "-1" if not using
+* `ref_out`: Turns the 10 MHz reference out signal on the X310 on (1) or off (0)
+    - set to (-1) if the SDR does not support a 10 MHz reference out signal
+
+### RF Frontend 0 Configuration Parameters
+RF configuration parameters for a single-channel radar setup. 
+* `rx_rate`: RX sample rate, specified in Hz
+    - defaults to be equal to `sample_rate`
+* `tx_rate`: TX sample rate, specified in Hz
+    - defaults to be equal to `sample_rate`
+* `freq`: Center frequency (LO/mixer frequency), specified in Hz
+* `lo_offset`: hardware LO/mixer offset, specified in Hz
+* `rx_gain`: RX gain, specified in dB
+    - available gain range dependent on specific SDR
+* `tx_gain`: TX gain, specified in dB
+    - available gain range dependent on specific SDR
+* `bw`: Configurable hardware filter bandwidth, specified in Hz
+    - not supported on all SDRs
+    - set to 0 if not supported
+* `tx_ant`: Port to be used for TX
+* `rx_ant`: Port to be used for RX
+* `transmit`: Whether to transmit data samples or not
+    - set to "true" (or leave blank) to transmit samples (normal operation)
+    - set to "false" to completely disable transmit
+* `tuning_args`: Set integer-N or fractional tuning arguments
+    - only supported on some SDRs
+    - leave as "" to do nothing
+
+### RF Frontend 1 Configuration Parameters
+RF configuration parameters for the second channel of a multi-channel radar setup. This is only supported on SDRs with more than 2 TX/RX ports. Parameters are the same as in RF Frontend 0 Configuration. 
+
+### Pulse Timing Parameters
+* `time_offset`: Offset time after set up before the first received sample, specified in seconds
+* `tx_duration`: Transmission duration, specified in seconds
+    - defaults as, and should be, equal to `pulse_length`
+* `rx_duration`: Receive duration, specified in seconds
+    - should be long enough to capture echoes from the expected most distant target
+* `pules_rep_int`: pulse repetition interval, specified in seconds
+    - should be longer than or equal to `rx_duration`
+* `tx_lead`: Time between start of TX and RX, specified in seconds
+    - can be used for psuedo-blanking 
+* `num_pulses`: Number of chirps/pulses to transmit and receive
+    - set to -1 to continuously transmit and record until stopped by CTRL-C
+    - code will record `num_pulses` of error-free pulses before terminating
+* `num_presums`: Number of received pulses to coherently average before writing to file
+* `phase_dithering`: Whether to enable phase dithering or not
+
+### During Recording File Location Parameters
+* `chirp_loc`: Which chirp file to transmit
+    - in most cases, should be the same as `out_file`
+* `save_loc`: (Temporary) location to write received samples to
+* `gps_loc`: (Temporary) location to save GPS data
+    - only works if "gpsdo" is selected for `clk_ref`
+* `max_chirps_per_file`: Maximum number of chirps (after presumming) to write to a single file
+    - set to -1 to avoid breaking into multiple files
+
+### File Save Locations for run.py
+These settings are only used by `run.py`, they are not read by `main.cpp`. 
+* `final_save_loc`: Save location for the big final file, set to `null` if you don't want to save a big file
+    - if `max_chirps_per_file` -= -1 (i.e. all data will be written directly to a single file), then final_save_loc and save_partial_files will be ignored
+* `save_partial_files`: Set to True if you want individual small files to be copied with the timestamp, set to False if you just want the big merged file to be copied with the timestamp
+    - if `max_chirps_per_file` == -1 (i.e. all data will be written directly to a single file), then final_save_loc and save_partial_files will be ignored
+* `save_gps`: Set to True if using GPS and wanting to save GPS location data, set to False otherwise
