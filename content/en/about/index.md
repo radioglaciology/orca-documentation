@@ -61,8 +61,9 @@ citation for all uses of ORCA is:
 
 Financial support for the development of ORCA has been provided by grants from:
 
-* NASA (Grants 80NSSC23K0271 and 80NSSC22K0782)
-* NSF (Grant No. 284791)
+* [NASA](https://www.nasa.gov/) (Grants 80NSSC23K0271 and 80NSSC22K0782)
+* [NSF](https://www.nsf.gov/div/index.jsp?div=OPP) (Grant No. 284791)
+* [NDSEG Fellowship Program](https://ndseg.org/)
 * [Heising-Simons Foundation](https://www.hsfoundation.org/)
 * [TomKat Center for Sustainable Energy](https://tomkat.stanford.edu/)
 * [Stanford Data Science](https://datascience.stanford.edu/)
