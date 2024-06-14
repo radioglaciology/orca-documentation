@@ -4,32 +4,68 @@ linkTitle: About
 menu: {main: {weight: 100, pre: "<i class='fa-solid fa-people-group'></i>"}}
 ---
 
-{{% blocks/cover title="About Goldydocs" image_anchor="bottom" height="auto" %}}
+{{% blocks/cover title="Contributors, Citations, Contact Info, and Acknowledgements" image_anchor="top" height="auto" %}}
 
-A sample site using the Docsy Hugo theme.
 {.mt-5}
 
 {{% /blocks/cover %}}
 
-{{% blocks/lead %}}
-
-Goldydocs is a sample site using the [Docsy](https://github.com/google/docsy)
-Hugo theme that shows what it can do and provides you with a template site
-structure. It’s designed for you to clone and edit as much as you like. See the
-different sections of the documentation and site for more ideas.
-
-{{% /blocks/lead %}}
-
 {{% blocks/section %}}
 
-# This is another section
-{.text-center}
+# Cite ORCA in your work
+
+If you use ORCA, we would appreciate you citing our work. The currently preferred
+citation for all uses of ORCA is:
+
+{{% readfile "/docs/tgrs_citation.md" %}}
 
 {{% /blocks/section %}}
 
 {{% blocks/section %}}
 
-# This is another section
-{.text-center}
+# Contributors
+
+{{< cardpane >}}
+{{< card header="**Dustin Schreoder**" title="Principal Investigator">}}
+
+{{< fa "fa-solid fa-laptop" "https://www.radioglaciology.com/" >}}
+{{< fa "fa-solid fa-envelope" "mailto:Dustin.M.Schroeder@stanford.edu" >}}
+
+{{< /card >}}
+{{< card header="**Anna Broome**" title="Lead Developer for ORCA and MAPPER">}}
+
+{{< fa "fab fa-github" "https://github.com/albroome" >}}
+{{< fa "fa-solid fa-envelope" "mailto:abroome@stanford.edu" >}}
+
+{{< /card >}}
+{{< card header="**Thomas Teisberg**" title="Lead Developer for ORCA and Peregrine" >}}
+
+{{< fa "fa-solid fa-laptop" "https://www.thomasteisberg.com/" >}}
+{{< fa "fab fa-github" "https://github.com/thomasteisberg" >}}
+{{< fa "fa-solid fa-envelope" "mailto:teisberg@stanford.edu" >}}
+
+{{< /card >}}
+{{< card header="**Dennis Woo**" title="Undergraduate Researcher">}}
+
+{{< fa "fab fa-github" "https://github.com/d-enniswoo" >}}
+
+{{< /card >}}
+{{< /cardpane >}}
+
+
+{{% /blocks/section %}}
+
+{{% blocks/section %}}
+
+# Funding
+
+Financial support for the development of ORCA has been provided by grants from:
+
+* NASA (Grants 80NSSC23K0271 and 80NSSC22K0782)
+* NSF (Grant No. 284791)
+* [Heising-Simons Foundation](https://www.hsfoundation.org/)
+* [TomKat Center for Sustainable Energy](https://tomkat.stanford.edu/)
+* [Stanford Data Science](https://datascience.stanford.edu/)
+* [Stanford Institute for Human-Centered Artificial Intelligence](https://hai.stanford.edu/)
 
 {{% /blocks/section %}}
