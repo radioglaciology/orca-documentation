@@ -1,3 +1,1 @@
-> T. O. Teisberg, A. L. Broome, and D. M. Schroeder,
-"Open Radar Code Architecture (ORCA): A Platform for Software-defined Coherent Chirped Radar Systems,"
-_IEEE Transactions on Geoscience and Remote Sensing_, In Review.
+> T. O. Teisberg, A. L. Broome and D. M. Schroeder, "Open Radar Code Architecture (ORCA): A Platform for Software-Defined Coherent Chirped Radar Systems," in _IEEE Transactions on Geoscience and Remote Sensing_, vol. 62, pp. 1-11, 2024, Art no. 5109411, doi: 10.1109/TGRS.2024.3446368.
