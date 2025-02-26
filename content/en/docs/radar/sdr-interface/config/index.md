@@ -83,8 +83,10 @@ RF configuration parameters for the second channel of a multi-channel radar setu
     - defaults as, and should be, equal to `pulse_length`
 * `rx_duration`: Receive duration, specified in seconds
     - should be long enough to capture echoes from the expected most distant target
-* `pules_rep_int`: pulse repetition interval, specified in seconds
+* `pulse_rep_int`: pulse repetition interval, specified in seconds
     - should be longer than or equal to `rx_duration`
+* `error_recovery_time`: Additional time added (on top of `pulse_rep_int`) to the next scheduled set of commands after an error occurs.
+    - Most errors are due to a command being enqueued too late, so providing some extra buffer time lets the host computer "catch up"
 * `tx_lead`: Time between start of TX and RX, specified in seconds
     - can be used for psuedo-blanking 
 * `num_pulses`: Number of chirps/pulses to transmit and receive
