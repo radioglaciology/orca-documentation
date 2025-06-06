@@ -43,6 +43,17 @@ accept bolts from the outside to connect the two shells together.
 
 ### Copper foil wrapping
 
+{{% alert title="Why is the box wrapped in copper tape?" color="info" %}}
+The SDR and the Pi communicate over a USB 3 interface. Unfortunately, USB 3 has
+known RF interference issues. The copper foil wrapping helps to minimize the
+impact of the noisy USB 3 connection on other devices. We have particularly
+had problems with GPS receivers (such as the one connected to the Peregrine
+autopilot) not being able to get a fix without this copper wrapping.
+
+You can read more about the USB 3 interference issues [from this Intel
+appnote](https://www.usb.org/sites/default/files/327216.pdf).
+{{% /alert %}}
+
 Print out the cutout templates **TODO LINK**. The first two pages are the
 cutout templates for the copper foil wrapping on the top and bottom of the
 enclosure.
