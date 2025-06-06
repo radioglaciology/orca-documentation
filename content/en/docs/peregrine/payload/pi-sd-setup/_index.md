@@ -1,7 +1,7 @@
 ---
 title: Raspberry Pi Setup
 #description: 
-#weight: 10
+weight: 100
 ---
 
 In order to standardize between units, much of the Pi setup is automated or
@@ -48,11 +48,8 @@ Especially if you plan to store your data to your MicroSD card, you don't want t
 mess around with this. Don't use an SD card that's off-brand, questionably sourced
 (i.e. possibly counterfeit), or used.
 
-There are many websites that have
-[Pi-specific MicroSD benchmarks](https://www.pidramble.com/wiki/benchmarks/microsd-cards).
-
-We use Samsung Pro Plus series MicroSD cards. They are available in up to 512 GB
-sizes.
+We use Samsung Pro Plus series MicroSD cards. There are other storage options too.
+See [Other Storage Options](/docs/peregrine/payload/data-storage) for details.
 {{% /alert %}}
 
 Launch Imager. After clicking on "Choose OS," navigate through the general purpose
