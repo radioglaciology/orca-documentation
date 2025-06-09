@@ -12,7 +12,7 @@ For each type of manufacturing, this page includes some notes about how we
 produce parts or which external vendors we have worked with.
 
 You can find design files for the hardware components of Peregrine in the
-**TODO LINK TO PEREGRINE HARDWARE GITHUB**.
+[Peregrine Hardware repository](https://github.com/thomasteisberg/peregrine_hardware).
 
 ## 3D Printing
 

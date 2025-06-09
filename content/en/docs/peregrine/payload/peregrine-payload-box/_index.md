@@ -17,7 +17,7 @@ Major components of the Peregrine radar payload box
 
 A complete bill of materials for the payload box is available in [this Google Sheet](https://docs.google.com/spreadsheets/d/1dFItvJ4mGw7Axdo4Iq9m_65ks9YspEahcemvucNRllk/edit?usp=sharing), embedded below.
 
-Some parts are custom made. See the [Custom Parts]({{< ref "custom-parts.md" >}}) page for suggestions on how to build these yourself or source them from reliable vendors.
+Some parts are custom made. See the [Custom Parts]({{< ref "custom-parts.md" >}}) page for suggestions on how to build these yourself or source them from reliable vendors. Design files for these parts are available in the [Peregrine Hardware repository](https://github.com/thomasteisberg/peregrine_hardware).
 
 {{% iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSJbgsZBh6xJ8d5_O48yUdmh09coE1oZ8njQWZqQKYorwuMoUEFA6LCj9P5QiVQtoCGBCOOl3b1RTjY/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false" style="min-height: 40vh;" %}}
 
@@ -54,8 +54,7 @@ You can read more about the USB 3 interference issues [from this Intel
 appnote](https://www.usb.org/sites/default/files/327216.pdf).
 {{% /alert %}}
 
-Print out the cutout templates **TODO LINK**. The first two pages are the
-cutout templates for the copper foil wrapping on the top and bottom of the
+Print out the [cutout templates](https://github.com/thomasteisberg/peregrine_hardware/blob/main/payload_enclosure/fabrication_files_pi4/cutout_templates.pdf). The PDF contains cutout templates for the copper foil wrapping on the top and bottom of the
 enclosure.
 
 {{% alert title="Double check the dimensions" color="warning" %}}
